@@ -1,9 +1,11 @@
 'use strict';
 
+const packageJson = require('../package.json');
+
 const healthTemplate = {
     application: {
-        name: process.env.APP_NAME,
-        version: '1.0.0',
+        name: packageJson.name,
+        version: packageJson.version,
         build: process.env.BUILD,
         time: 1
     },
@@ -14,7 +16,7 @@ const healthTemplate = {
     response: {
         version: '1',
         environment: process.env.ENVIRONMENT,
-        startTime: 1,
+        startTime: Date.now(),
         upTime: 1
     }
 };
