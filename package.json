@@ -1,0 +1,14 @@
+{
+  "name": "nodeAPI",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Jose M. Morlesin",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "3.1.0"
+  }
+}
