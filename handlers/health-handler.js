@@ -2,9 +2,9 @@
 
 const healthTemplate = {
     application: {
-        name: 'Node API',
+        name: process.env.APP_NAME,
         version: '1.0.0',
-        build: '1',
+        build: process.env.BUILD,
         time: 1
     },
     request: {
@@ -13,7 +13,7 @@ const healthTemplate = {
     },
     response: {
         version: '1',
-        environment: 'Development',
+        environment: process.env.ENVIRONMENT,
         startTime: 1,
         upTime: 1
     }

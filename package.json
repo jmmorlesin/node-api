@@ -5,10 +5,11 @@
   "author": "Jose M. Morlesin",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js"
+    "start": "node -r dotenv/config app.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "dotenv": "^4.0.0",
     "express": "^4.15.0",
     "require.js": "^1.0.0"
   }
