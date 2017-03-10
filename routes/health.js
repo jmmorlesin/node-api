@@ -1,29 +1,15 @@
 'use strict';
 
-const health = {
-    application: {
-        name: 'Node API',
-        version: '1.0.0',
-        build: '1',
-        time: 1
-    },
-    request: {
-        requestedUrl: 'http://...',
-        id: 'uuid'
-    },
-    response: {
-        version: '1',
-        environment: 'Development',
-        startTime: 1,
-        upTime: 1
-    }
-};
+const express = require('express');
+const router = express.Router();
 
+const healthHandler = require('../handlers/health-handler');
 
-function getHealth(req, res) {
-    res.json(health);
-}
+router.get('/', (req, res, next) => {
+    healthHandler.getHealthInformation()
+        .then(result => {
+            res.json(result);
+        });
+});
 
-module.exports = {
-    getHealth
-};
+module.exports = router;

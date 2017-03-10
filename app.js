@@ -11,11 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Routes
-const healthController = require('./routes/health');
+const health = require('./routes/health');
 
-
-app.get('/health', healthController.getHealth);
-
+app.use('/health', health);
 
 app.listen(3000, function () {
     console.log('Node API listening on port 3000');
