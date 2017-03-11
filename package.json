@@ -5,12 +5,18 @@
   "author": "Jose M. Morlesin",
   "license": "MIT",
   "scripts": {
-    "start": "node -r dotenv/config app.js"
+    "start": "node -r dotenv/config app.js",
+    "test": "mocha --timeout 10000"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.0",
     "require.js": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.2.0"
   }
 }

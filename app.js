@@ -18,3 +18,6 @@ app.use('/health', health);
 app.listen(3000, function () {
     console.log('Node API listening on port 3000');
 });
+
+//Export app to test
+module.exports = app;
