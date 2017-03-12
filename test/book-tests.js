@@ -188,20 +188,4 @@ describe('Book', () => {
         });
     });
 
-    //
-
-
-    // describe('/GET health', () => {
-    //     it('it should GET the health endpoint', (done) => {
-    //         chai.request(server)
-    //             .get('/health')
-    //             .end((err, res) => {
-    //                 console.log(res.body);
-    //                 res.should.have.status(200);
-    //                 res.body.should.be.a('object');
-    //
-    //                 done();
-    //             });
-    //     });
-    // });
 });
