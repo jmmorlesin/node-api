@@ -10,7 +10,7 @@ Requirements
 ------------
 
 Node.js  
-MongoDB (You can get a database in mlab if you don't have MongoDB installed locally. See more in [https://mlab.com/](https://mlab.com/) )   
+MongoDB (You can get a database in mlab if you don't have MongoDB installed locally. See more in [https://mlab.com/](https://mlab.com/))   
 Postman, curl or similar to run the calls to the API
 
 Before you start
@@ -97,7 +97,7 @@ Response:
   }
 }
 ```
-As you can see, not all the values are properly informed yet, but it is to give an idea about what we will need to provide. The build id, for example, it is task from the Continuous integration tool to generate and replace it by the correct value.
+As you can see, not all the values are properly informed yet, but it is to give an idea about what we will need to provide. The build id, for example, it is task from the Continuous Integration tool to generate and replace it by the correct value.
 
 How to get a valid token
 ------------------------
