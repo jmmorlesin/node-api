@@ -1,17 +1,166 @@
-# node API
-API Sample using Node.js
+# Sample node.js API using Express and JWT
 
-Node version 6.6.0
+This project shows a sample of an API in node.js using Express and JWT to implement the security.
+  
+See more about JWT in [https://jwt.io](https://jwt.io)  
 
-Modules  
-config  
-Copy the config/sample.json to config/default.json and config/test.json. Uses environment variables to define which file will be used.
+In the sample, it is used Mongo DB in order to do the proof of concept of the CRUD in a model.
 
-Adding mocha and chai to test the application  
+Requirements
+------------
 
->npm start  
+Node.js  
+MongoDB (You can get a database in mlab if you don't have MongoDB installed locally. See more in [https://mlab.com/](https://mlab.com/) )   
+Postman, curl or similar to run the calls to the API
 
->npm test
+Before you start
+----------------
+The application uses the config module to maintain the configurations for deployments in different environments. Only it is tracked on git the *sample.json*  
+
+In the config folder, you can find the file *sample.json*   
+
+```
+{
+  "application": {
+    "environment": "test",
+    "build": "1"
+  },
+  "database": {
+    "mongodbUri": "mongodb://localhost:27017/api-test"
+  },
+  "jwt": {
+    "secret": "jwt secret"
+  },
+  "credentials": {
+    "username": "user",
+    "password": "password"
+  }
+}
+```
+
+Copy this file into the next files:  
+```
+/config/default.json  
+/config/test.json  
+```
+
+Now you can specify your values. Consider change the values, specifically the password in the credentials and the secret in the jwt object.  
+
+ 
+Running the application and the tests
+-------------------------------------
+
+To run the application, clone the repository, create your *default.json* and *test.json* and use the following commands:
+
+```
+npm install
+npm test
+npm start
+
+```
+
+*npm install* will install the dependencies, *npm test* will launch the tests and *npm start* will launch the application on localhost on the port 3000 (The scripts are defined in the *package.json*)
+
+When the application is running, you can access to the following endpoints:
+
+/health (GET)   
+/login (POST)  
+/books (GET, POST)    
+/books/:id (GET, PUT, DELETE)
+
+Without credentials, you only will access to the health and login endpoints.  
+
+Description of the health endpoint 
+----------------------------------
+
+GET  
+/health
+
+Response:  
+```
+{
+  application: {
+    name: "nodeAPI",
+    version: "1.0.0",
+    build: "1",
+    time: 1
+  },
+  request: {
+    requestedUrl: "http://...",
+    id: "uuid"
+  },
+  response: {
+    version: "1",
+    environment: "development",
+    startTime: 1489342730753,
+    upTime: 11134
+  }
+}
+```
+As you can see, not all the values are properly informed yet, but it is to give an idea about what we will need to provide. The build id, for example, it is task from the Continuous integration tool to generate and replace it by the correct value.
+
+How to get a valid token
+------------------------
+
+Use the login endpoint with the valid credentials. In this sample, the unique user and password valid to get a token is defined in the *sample.json* in the credentials object.  
+
+POST  
+/login  
+JSON Body content:  
+```
+{
+  "username": "user",
+  "password": "password"
+}
+```
+
+Response:
+```
+{
+  "username": "user",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJpYXQiOjE0ODkzNDM2MzIsImV4cCI6MTQ4OTM0NzIzMn0.snbJCXU-wfBeD4Z0yFIysodrgYUzMeJfacP_93E0fiU"
+}
+```
+
+Now you have a valid token that will be valid 1 hour (Defined in the *jwt-handler*).
+With this valid token, you can access the resources in the /books endpoints adding the following header in the call: 
+
+Key: Authorization  
+Value: Bearer your_token
+
+
+Project structure
+-----------------
+
+| Name                            | Description                                          |
+|---------------------------------|------------------------------------------------------|
+| **config**/sample.json          | Sample file to contain your keys and passwords       |
+| **handlers**/book-handler.js    | Book handler with the CRUD operations                |
+| **handlers**/db-handler.js      | Database handler                                     |
+| **handlers**/health-handler.js  | Health handler to generate the status content        |
+| **handlers**/jwt-handler.js     | JWT handler to generate new valid tokens             |
+| **handlers**/login-handler.js   | Simple login handler to give credentials to the user |
+| **models**/book.js              | Book model                                           |
+| **routes**/book.js              | Routes for the REST endpoints of Book /books         |
+| **routes**/health.js            | Route for the Health endpoint /health                |
+| **test**/                       | Test folder                                          |
+| app.js                          | Main application file                                |
+| package.json                    | NPM dependencies                                     |
+
+
+List of main modules
+---------------
+
+| Module       | Description                                      |
+|--------------|--------------------------------------------------|
+| config       | Easy configurations for different environments   |
+| express      | Node.js web framework                            |
+| express-jwt  | Express middleware that validates a JWT token    |
+| jsonwebtoken | Json Web Tokens (JWT) implementation for node.js |
+| mongoose     | MongoDB ODM                                      |
+| chai         | BDD/TDD assertion library                        |
+| chai-http    | HTTP call helper for chai                        |
+| mocha        | Test framework                                   |
 
 
 License
