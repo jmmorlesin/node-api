@@ -5,13 +5,14 @@
   "author": "Jose M. Morlesin",
   "license": "MIT",
   "scripts": {
-    "start": "node -r dotenv/config app.js",
+    "start": "node app.js",
     "test": "mocha --timeout 10000"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "dotenv": "^4.0.0",
+    "config": "^1.25.1",
     "express": "^4.15.0",
+    "mongoose": "^4.8.6",
     "require.js": "^1.0.0"
   },
   "devDependencies": {

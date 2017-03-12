@@ -38,3 +38,6 @@ jspm_packages
 .idea/
 
 .env
+
+config/default.json
+config/test.json

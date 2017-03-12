@@ -5,7 +5,7 @@ const router = express.Router();
 
 const healthHandler = require('../handlers/health-handler');
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     healthHandler.getHealthInformation()
         .then(result => {
             res.json(result);

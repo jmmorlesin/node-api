@@ -1,12 +1,14 @@
 'use strict';
 
+const config = require('config');
+
 const packageJson = require('../package.json');
 
 const healthTemplate = {
     application: {
         name: packageJson.name,
         version: packageJson.version,
-        build: process.env.BUILD,
+        build: config.get('application.build'),
         time: 1
     },
     request: {
@@ -15,7 +17,7 @@ const healthTemplate = {
     },
     response: {
         version: '1',
-        environment: process.env.ENVIRONMENT,
+        environment: config.get('application.environment'),
         startTime: Date.now(),
         upTime: 1
     }

@@ -1,0 +1,9 @@
+{
+  "application": {
+    "environment": "test",
+    "build": "1"
+  },
+  "database": {
+    "mongodbUri": "mongodb://localhost:27017/api-test"
+  }
+}
