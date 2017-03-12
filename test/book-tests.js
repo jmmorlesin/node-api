@@ -9,12 +9,14 @@ const server = require('../app');
 const should = chai.should();
 
 const Book = require('../models/book');
+const jwtHandler = require('../handlers/jwt-handler');
 
 chai.use(chaiHttp);
 
 describe('Book', () => {
 
     const baseUrl = '/books';
+    const credentials = jwtHandler.generateToken({username: 'test'});
 
     beforeEach((done) => { //Before each test we empty the database
         Book.remove({}, (err) => {
@@ -32,6 +34,7 @@ describe('Book', () => {
             bookTest.save((err, book) => {
                 chai.request(server)
                     .get(`${baseUrl}/${book.id}`)
+                    .set('Authorization', `Bearer ${credentials}`)
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a('object');
@@ -46,8 +49,18 @@ describe('Book', () => {
         it('it should fail to GET a book by an invalid id', (done) => {
             chai.request(server)
                 .get(`${baseUrl}/1234`)
+                .set('Authorization', `Bearer ${credentials}`)
                 .end((err, res) => {
                     res.should.have.status(404);
+                    done();
+                });
+        });
+
+        it('it should fail to GET a book using invalid credentials', (done) => {
+            chai.request(server)
+                .get(`${baseUrl}/1234`)
+                .end((err, res) => {
+                    res.should.have.status(401);
                     done();
                 });
         });
@@ -62,6 +75,7 @@ describe('Book', () => {
 
             chai.request(server)
                 .post(baseUrl)
+                .set('Authorization', `Bearer ${credentials}`)
                 .send(bookContent)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -77,6 +91,7 @@ describe('Book', () => {
             let bookIncomplete = { author: 'George R. R. Martin' };
             chai.request(server)
                 .post(baseUrl)
+                .set('Authorization', `Bearer ${credentials}`)
                 .send(bookIncomplete)
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -90,6 +105,7 @@ describe('Book', () => {
             let bookIncomplete = { title: 'A Song of Ice and Fire' };
             chai.request(server)
                 .post(baseUrl)
+                .set('Authorization', `Bearer ${credentials}`)
                 .send(bookIncomplete)
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -107,11 +123,21 @@ describe('Book', () => {
             };
             chai.request(server)
                 .post(baseUrl)
+                .set('Authorization', `Bearer ${credentials}`)
                 .send(bookIncomplete)
                 .end((err, res) => {
                     res.should.have.status(400);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Invalid book. Should contain title and author');
+                    done();
+                });
+        });
+
+        it('it should fail to POST a book using invalid credentials', (done) => {
+            chai.request(server)
+                .post(baseUrl)
+                .end((err, res) => {
+                    res.should.have.status(401);
                     done();
                 });
         });
@@ -122,6 +148,7 @@ describe('Book', () => {
         it('it should GET all the books - 0', (done) => {
             chai.request(server)
                 .get(baseUrl)
+                .set('Authorization', `Bearer ${credentials}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
@@ -139,6 +166,7 @@ describe('Book', () => {
             bookTest.save((err, success) => {
                 chai.request(server)
                     .get(baseUrl)
+                    .set('Authorization', `Bearer ${credentials}`)
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a('array');
@@ -146,6 +174,15 @@ describe('Book', () => {
                         done();
                     });
             });
+        });
+
+        it('it should fail to GET all the books using invalid credentials', (done) => {
+            chai.request(server)
+                .get(baseUrl)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                    done();
+                });
         });
     });
 
@@ -158,6 +195,7 @@ describe('Book', () => {
             bookTest.save((err, book) => {
                 chai.request(server)
                     .put(`${baseUrl}/${book.id}`)
+                    .set('Authorization', `Bearer ${credentials}`)
                     .send({title: 'Game of Thrones'})
                     .end((err, res) => {
                         res.should.have.status(200);
@@ -168,6 +206,27 @@ describe('Book', () => {
                         done();
                     });
             });
+        });
+
+        it('it should fail UPDATE a book with an invalid id', (done) => {
+                chai.request(server)
+                    .put(`${baseUrl}/1234`)
+                    .set('Authorization', `Bearer ${credentials}`)
+                    .send({title: 'Game of Thrones'})
+                    .end((err, res) => {
+                        res.should.have.status(404);
+                        res.body.should.be.a('object');
+                        done();
+                    });
+        });
+
+        it('it should fail to UPDATE a book using invalid credentials', (done) => {
+            chai.request(server)
+                .put(`${baseUrl}/1234`)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                    done();
+                });
         });
     });
 
@@ -180,11 +239,21 @@ describe('Book', () => {
             bookTest.save((err, book) => {
                 chai.request(server)
                     .delete(`${baseUrl}/${book.id}`)
+                    .set('Authorization', `Bearer ${credentials}`)
                     .end((err, res) => {
                         res.should.have.status(200);
                         done();
                     });
             });
+        });
+
+        it('it should fail to DELETE a book using invalid credentials', (done) => {
+            chai.request(server)
+                .delete(`${baseUrl}/1234`)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                    done();
+                });
         });
     });
 

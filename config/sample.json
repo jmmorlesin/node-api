@@ -5,5 +5,12 @@
   },
   "database": {
     "mongodbUri": "mongodb://localhost:27017/api-test"
+  },
+  "jwt": {
+    "secret": "jwt secret"
+  },
+  "credentials": {
+    "username": "user",
+    "password": "password"
   }
 }

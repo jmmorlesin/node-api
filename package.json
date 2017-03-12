@@ -12,6 +12,8 @@
     "body-parser": "^1.15.2",
     "config": "^1.25.1",
     "express": "^4.15.0",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.8.6",
     "require.js": "^1.0.0"
   },
