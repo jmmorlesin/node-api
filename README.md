@@ -82,22 +82,22 @@ Response:
   application: {
     name: "nodeAPI",
     version: "1.0.0",
-    build: "1",
-    time: 1
+    build: "1", 
+    time: 1489436081787
   },
   request: {
-    requestedUrl: "http://...",
-    id: "uuid"
+    requestedUrl: "/health",
+    id: "64cde43c-c0c8-456d-b9a9-f51d4ed3c149"
   },
   response: {
     version: "1",
     environment: "development",
-    startTime: 1489342730753,
-    upTime: 11134
+    startTime: 1489436067937,
+    upTime: 14279
   }
 }
 ```
-As you can see, not all the values are properly informed yet, but it is to give an idea about what we will need to provide. The build id, for example, it is task from the Continuous Integration tool to generate and replace it by the correct value.
+In this case, for example, the application.build property is task from the Continuous Integration tool to generate and replace it by the correct value.  
 
 How to get a valid token
 ------------------------
@@ -148,19 +148,21 @@ Project structure
 | package.json                    | NPM dependencies                                     |
 
 
-List of main modules
+List of modules
 ---------------
 
-| Module       | Description                                      |
-|--------------|--------------------------------------------------|
-| config       | Easy configurations for different environments   |
-| express      | Node.js web framework                            |
-| express-jwt  | Express middleware that validates a JWT token    |
-| jsonwebtoken | Json Web Tokens (JWT) implementation for node.js |
-| mongoose     | MongoDB ODM                                      |
-| chai         | BDD/TDD assertion library                        |
-| chai-http    | HTTP call helper for chai                        |
-| mocha        | Test framework                                   |
+| Module              | Description                                      |
+|---------------------|--------------------------------------------------|
+| body-parser         | Middleware to parse request bodies in req.body   |
+| config              | Easy configurations for different environments   |
+| express             | Node.js web framework                            |
+| express-jwt         | Express middleware that validates a JWT token    |
+| express-request-id  | Express middleware for setting unique request id |
+| jsonwebtoken        | Json Web Tokens (JWT) implementation for node.js |
+| mongoose            | MongoDB ODM                                      |
+| chai                | BDD/TDD assertion library                        |
+| chai-http           | HTTP call helper for chai                        |
+| mocha               | Test framework                                   |
 
 
 License

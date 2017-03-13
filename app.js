@@ -4,13 +4,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressJWT = require('express-jwt');
 const config = require('config');
+const addRequestId = require('express-request-id')();
+
 
 const db = require('./handlers/db-handler');
 db.connect();
 
 
 const app = express();
-
+app.use(addRequestId);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

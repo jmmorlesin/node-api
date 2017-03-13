@@ -24,10 +24,13 @@ const healthTemplate = {
 };
 
 
-function generateHealth(callback) {
+function generateHealth(req, callback) {
     setImmediate(() => {
         try {
             let health = healthTemplate;
+            health.application.time = Date.now();
+            health.request.requestedUrl = req.originalUrl;
+            health.request.id = req.id;
             health.response.upTime = process.uptime() * 1000;
 
             return callback(undefined, health);
@@ -37,9 +40,9 @@ function generateHealth(callback) {
     });
 }
 
-function getHealthInformation() {
+function getHealthInformation(req) {
     return new Promise((resolve, reject) => {
-        generateHealth((err, result) => {
+        generateHealth(req, (err, result) => {
             if (err) return reject(err);
 
             resolve(result);
